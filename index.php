@@ -1,3 +1,4 @@
-<html>
-    <body>Hola Mundo!!</body>
-</html>
+<?php
+header("Location: /dist/index.html");
+exit;
+?>

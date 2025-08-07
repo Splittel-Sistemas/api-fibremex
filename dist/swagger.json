@@ -14,22 +14,19 @@
             "name": "X-Email",
             "in": "header",
             "required": true,
-            "type": "string",
-            "value":"aaron.cuevas@fibremex.com.mx"
+            "type": "string"
           },
           {
             "name": "X-Password",
             "in": "header",
             "required": true,
-            "type": "string",
-            "value":"AQSpL;Y7.w,-"
+            "type": "string"
           },
           {
             "name": "X-Cardcode",
             "in": "header",
             "required": true,
-            "type": "string",
-            "value":"001045"
+            "type": "string"
           }
         ],
         "responses": {
