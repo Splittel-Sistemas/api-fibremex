@@ -1,0 +1,76 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API - Fibremex Ecommerce",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/local/GetProducts.php": {
+      "post": {
+        "tags": ["Productos"],
+        "summary": "Obtiene la lista de productos",
+        "parameters": [
+          {
+            "name": "X-Email",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "value":"aaron.cuevas@fibremex.com.mx"
+          },
+          {
+            "name": "X-Password",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "value":"AQSpL;Y7.w,-"
+          },
+          {
+            "name": "X-Cardcode",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "value":"001045"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de productos",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": { "type": "string" },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Codigo": { "type": "string" },
+                      "Descripcion": { "type": "string" },
+                      "Stock": { "type": "number", "format": "float" },
+                      "Precio": { "type": "number", "format": "float" },
+                      "Moneda": { "type": "string" },
+                      "Imagen": { "type": "string" },
+                      "FichaTecnica": { "type": "string" },
+                      "Marca": { "type": "string" },
+                      "Categoria": { "type": "string" },
+                      "Subcategoria": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Faltan credenciales"
+          },
+          "403": {
+            "description": "Credenciales incorrectas"
+          },
+		   "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    }
+  }
+}

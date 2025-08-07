@@ -1,0 +1,50 @@
+<!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>API Grupo Splittel - Ecommerce</title>
+    <link rel="stylesheet" type="text/css" href="./swagger-ui.css" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+    <style>
+      .topbar { background-color: #e5e5e5 !important; } /* Color corporativo */
+      .swagger-ui .scheme-container { background-color: #f8f8f8; }
+      .topbar-wrapper::before {
+        content: "";
+        display: inline-block;
+        width: 160px;
+        height: 30px;
+        background-image: url('fibremex.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+         /* 🔵 Cambiar color del botón "Explore" */
+    .swagger-ui .topbar .download-url-wrapper .button {
+      background-color: #bf202f !important; /* color de fondo */
+      color: white !important;              /* color del texto */
+      border-radius: 5px;
+      border: none;
+    }
+
+    .swagger-ui .topbar .download-url-wrapper .btn:hover {
+      background-color: #bf202f !important;
+    }
+
+    /* 🔲 Cambiar borde del input de búsqueda (campo de URL del JSON) */
+    .swagger-ui .topbar input.download-url-input {
+      border: 2px solid #bf202f !important;
+      border-radius: 4px;
+      padding: 6px;
+    }
+    </style>
+  </head>
+
+  <body>  
+    <div id="swagger-ui"></div>
+    <script src="./swagger-ui-bundle.js" charset="UTF-8"> </script>
+    <script src="./swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+    <script src="./swagger-initializer.js" charset="UTF-8"> </script>
+  </body>
+</html>
