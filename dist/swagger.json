@@ -5,7 +5,7 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/dist/local/GetProducts.php": {
+    "/local/GetProducts.php": {
       "post": {
         "tags": ["Productos"],
         "summary": "Obtiene la lista de productos",
