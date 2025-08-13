@@ -13,7 +13,7 @@ function authenticate($conn) {
 
     if (is_null($email) || is_null($apiKey) || is_null($cardcode)) {
         http_response_code(401);
-        echo json_encode(["error" => "Faltan credenciales"]);
+        echo json_encode(["error" => "Faltan credenciales:".$email."***".$cardcode."****".$apiKey]);
         exit;
     }
     $sql = "SELECT password,ApiKey FROM login_cliente WHERE cardcode = '".$cardcode."' AND email = '".$email."'";
