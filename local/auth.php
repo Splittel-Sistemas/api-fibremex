@@ -8,8 +8,8 @@ function authenticate($conn) {
     $secretKey = "ClaveFibretaDe32OptacteresSPL";
     $headers = getallheaders();
     $email = isset($headers['X-Email']) ? $headers['X-Email'] : null;
-    $cardcode = isset($headers['X-CardCode']) ? $headers['X-CardCode'] : null;
-    $apiKey = isset($headers['X-ApiKey']) ? $headers['X-ApiKey'] : null;
+    $cardcode = isset($headers['X-Cardcode']) ? $headers['X-Cardcode'] : null;
+    $apiKey = isset($headers['X-Apikey']) ? $headers['X-Apikey'] : null;
 
     if (is_null($email) || is_null($apiKey) || is_null($cardcode)) {
         http_response_code(401);

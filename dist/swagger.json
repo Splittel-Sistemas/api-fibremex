@@ -17,13 +17,13 @@
             "type": "string"
           },
           {
-            "name": "X-CardCode",
+            "name": "X-Cardcode",
             "in": "header",
             "required": true,
             "type": "string"
           },
           {
-            "name": "X-ApiKey",
+            "name": "X-Apikey",
             "in": "header",
             "required": true,
             "type": "string"
