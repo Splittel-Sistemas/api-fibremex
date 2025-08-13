@@ -11,7 +11,7 @@ function authenticate($conn) {
     $cardcode = isset($headers['X-CardCode']) ? $headers['X-CardCode'] : null;
     $apiKey = isset($headers['X-ApiKey']) ? $headers['X-ApiKey'] : null;
 
-    if (!$email || !$apiKey || !$cardcode) {
+    if (is_null($email) || is_null($apiKey) || is_null($cardcode)) {
         http_response_code(401);
         echo json_encode(["error" => "Faltan credenciales"]);
         exit;
