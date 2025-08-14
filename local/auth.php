@@ -29,16 +29,13 @@ function authenticate($conn) {
                 echo json_encode(["error" => "Usuario invalido"]);
                 exit;
             }else{
-                if(!leerApiKey($apiKey, $secretKey)){
-                    http_response_code(403);
-                        echo json_encode(["error" => "API KEY incorrectas"]);
-                }else{
+                
                     if($apiKey!=$row['ApiKey']){
                         http_response_code(403);
                         echo json_encode(["error" => "Credenciales incorrectas"]);
                         exit;
                     }
-                }
+                
             }
         }
     }
