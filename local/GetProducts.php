@@ -13,7 +13,7 @@ $headers = getallheaders();
  $rowCliente = $resultCliente->fetch_assoc();
  $descuento_cliente=$rowCliente['descuento'];
 
-$sql = "SELECT codigo,desc_producto,existencia,precio,descuento_producto,img_principal,id_marca,subcategoria,info_tecnica FROM catalogo_productos WHERE activo='si' AND precio > 0";
+$sql = "SELECT codigo,desc_producto,existencia,precio,descuento_producto,img_principal,id_marca,subcategoria,info_tecnica,id_desc_larga FROM catalogo_productos WHERE activo='si' AND precio > 0";
 $result = $conn->query($sql);
 $productos = [];
 if ($result && $result->num_rows !== 0) {
@@ -78,7 +78,17 @@ while ($row = $result->fetch_assoc()) {
     $categoria=utf8_encode($rowCat['desc_familia']);
     }
     /***********************************************************************************/
-
+    /********************* OBTENER DESCRIPCION LARGA DEL PRODUCTO ***********************/
+    $DESL='';
+    $sqlDESC = "SELECT desc_larga
+                FROM catalogo_descripciones 
+                WHERE id_desc_larga = '".$row["id_desc_larga"]."'";
+    $resultDESC = $conn->query($sqlDESC);
+    if($resultDESC->num_rows > 0){
+    $rowDESC = $resultDESC->fetch_assoc();
+    $DESL=utf8_encode($rowDESC['desc_larga']);
+    }
+    /***********************************************************************************/
 
     $productos[] = [
             "Codigo" => $row["codigo"],
@@ -91,6 +101,7 @@ while ($row = $result->fetch_assoc()) {
             "Marca" => $marca,
             "Categoria" => $categoria,
             "Subcategoria" => $subcategoria,
+            "Caracteristicas" => $DESL
         ];
         //echo json_encode($row);
 }
