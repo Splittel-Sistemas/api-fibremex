@@ -2,7 +2,7 @@
 // Evita que cualquier salida previa dañe el JSON
 ob_start();
 ob_clean();
-header("Content-Type: application/json");
+header('Content-Type: application/json; charset=utf-8');
 require 'auth.php';
 authenticate($conn);
 $headers = getallheaders();
@@ -105,7 +105,7 @@ while ($row = $result->fetch_assoc()) {
         ];
         //echo json_encode($row);
 }
-var_dump($productos);
+//var_dump($productos);
 
 echo json_encode(
     ["status" => "success", "data" => $productos],
