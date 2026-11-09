@@ -107,10 +107,26 @@ while ($row = $result->fetch_assoc()) {
 }
 //var_dump($productos);
 
-echo json_encode(
-    ["status" => "success", "data" => $productos],
-    JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
-    );
+$response = [
+    "status" => "success",
+    "data" => $productos
+];
+
+$json = json_encode(
+    $response,
+    JSON_UNESCAPED_UNICODE |
+    JSON_UNESCAPED_SLASHES
+);
+
+if ($json === false) {
+    echo json_encode([
+        "status" => "error",
+        "mensaje" => json_last_error_msg(),
+        "codigo_error" => json_last_error()
+    ]);
+} else {
+    echo $json;
+}
 }else{
 
     echo json_encode(["status" => "success", "data" => $productos]);
