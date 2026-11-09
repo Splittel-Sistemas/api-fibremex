@@ -39,7 +39,7 @@ while ($row = $result->fetch_assoc()) {
     /********************* OBTENER LA URL PRINCIPAL DEL PRODUCTO ***********************/
     $url='';
     if($row["img_principal"]!='')
-        $url=urldecode(utf8_encode("https://fibremex.com/fibra-optica/public/images/img_spl/productos/".$row["codigo"]."/thumbnail/".$row["img_principal"]));
+        $url=urldecode(mb_convert_encoding("https://fibremex.com/fibra-optica/public/images/img_spl/productos/".$row["codigo"]."/thumbnail/".$row["img_principal"], 'UTF-8', 'ISO-8859-1'));
 
     /***********************************************************************************/
     /********************* OBTENER LA MARCA DEL PRODUCTO ***********************/
