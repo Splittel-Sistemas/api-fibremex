@@ -16,6 +16,22 @@ $headers = getallheaders();
 $sql = "SELECT codigo,desc_producto,existencia,precio,descuento_producto,img_principal,id_marca,subcategoria,info_tecnica,id_desc_larga FROM catalogo_productos WHERE activo='si' AND precio > 0";
 $result = $conn->query($sql);
 $productos = [];
+
+function corregirUTF8($texto) {
+
+    if (!is_string($texto) || $texto === '') {
+        return $texto;
+    }
+
+    // Si ya es UTF-8 válido, no modificarlo
+    if (mb_check_encoding($texto, 'UTF-8')) {
+        return $texto;
+    }
+
+    // Convertir desde Windows-1252 a UTF-8
+    return mb_convert_encoding($texto, 'UTF-8', 'Windows-1252');
+}
+
 if ($result && $result->num_rows !== 0) {
 
 while ($row = $result->fetch_assoc()) {
@@ -92,16 +108,16 @@ while ($row = $result->fetch_assoc()) {
 
     $productos[] = [
             "Codigo" => $row["codigo"],
-            "Descripcion" => ($row["desc_producto"]),
+            "Descripcion" => corregirUTF8($row["desc_producto"]),
             "Stock" => floor($row["existencia"]*0.625),
             "Precio" => $PL,
             "Moneda" => "USD",
             "Imagen" => $url,
             "FichaTecnica" => $FT,
-            "Marca" => $marca,
-            "Categoria" => $categoria,
-            "Subcategoria" => $subcategoria,
-            "Caracteristicas" => $DESL
+            "Marca" => corregirUTF8($marca),
+            "Categoria" => corregirUTF8($categoria),
+            "Subcategoria" => corregirUTF8($subcategoria),
+            "Caracteristicas" => corregirUTF8($DESL)
         ];
         //echo json_encode($row);
 }
