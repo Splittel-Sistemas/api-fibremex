@@ -105,7 +105,7 @@ while ($row = $result->fetch_assoc()) {
         ];
         //echo json_encode($row);
 }
-//var_dump($productos);
+var_dump($productos);
 
 echo json_encode(
     ["status" => "success", "data" => $productos],
