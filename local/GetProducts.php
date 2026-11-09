@@ -39,7 +39,7 @@ while ($row = $result->fetch_assoc()) {
     /********************* OBTENER LA URL PRINCIPAL DEL PRODUCTO ***********************/
     $url='';
     if($row["img_principal"]!='')
-        $url=urldecode(utf8_encode("https://fibremex.com/fibra-optica/public/images/img_spl/productos/".$row["codigo"]."/thumbnail/".$row["img_principal"]));
+        $url=urldecode(("https://fibremex.com/fibra-optica/public/images/img_spl/productos/".$row["codigo"]."/thumbnail/".$row["img_principal"]));
 
     /***********************************************************************************/
     /********************* OBTENER LA MARCA DEL PRODUCTO ***********************/
@@ -60,7 +60,7 @@ while ($row = $result->fetch_assoc()) {
     $resultFT = $conn->query($sqlFT);
     if($resultFT->num_rows > 0){
     $rowFT = $resultFT->fetch_assoc();
-    $FT=urldecode("https://fibremex.com/fibra-optica/public/images/img_spl/".utf8_encode($rowFT['ruta'].".pdf"));
+    $FT=urldecode("https://fibremex.com/fibra-optica/public/images/img_spl/".($rowFT['ruta'].".pdf"));
     }
     /***********************************************************************************/
     /********************* OBTENER LA FAMILIA Y SUBFAMILIA DEL PRODUCTO ***********************/
@@ -74,8 +74,8 @@ while ($row = $result->fetch_assoc()) {
     $resultCat = $conn->query($sqlCat);
     if($resultCat->num_rows > 0){
     $rowCat = $resultCat->fetch_assoc();
-    $subcategoria=utf8_encode($rowCat['descripcion']);
-    $categoria=utf8_encode($rowCat['desc_familia']);
+    $subcategoria=($rowCat['descripcion']);
+    $categoria=($rowCat['desc_familia']);
     }
     /***********************************************************************************/
     /********************* OBTENER DESCRIPCION LARGA DEL PRODUCTO ***********************/
@@ -86,13 +86,13 @@ while ($row = $result->fetch_assoc()) {
     $resultDESC = $conn->query($sqlDESC);
     if($resultDESC->num_rows > 0){
     $rowDESC = $resultDESC->fetch_assoc();
-    $DESL=utf8_encode($rowDESC['desc_larga']);
+    $DESL=($rowDESC['desc_larga']);
     }
     /***********************************************************************************/
 
     $productos[] = [
             "Codigo" => $row["codigo"],
-            "Descripcion" => utf8_encode($row["desc_producto"]),
+            "Descripcion" => ($row["desc_producto"]),
             "Stock" => floor($row["existencia"]*0.625),
             "Precio" => $PL,
             "Moneda" => "USD",
