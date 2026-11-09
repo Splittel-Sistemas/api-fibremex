@@ -2,7 +2,7 @@
 // Evita que cualquier salida previa dañe el JSON
 ob_start();
 ob_clean();
-header('Content-Type: application/json; charset=utf-8');
+header("Content-Type: application/json");
 require 'auth.php';
 authenticate($conn);
 $headers = getallheaders();
@@ -16,22 +16,6 @@ $headers = getallheaders();
 $sql = "SELECT codigo,desc_producto,existencia,precio,descuento_producto,img_principal,id_marca,subcategoria,info_tecnica,id_desc_larga FROM catalogo_productos WHERE activo='si' AND precio > 0";
 $result = $conn->query($sql);
 $productos = [];
-
-function corregirUTF8($texto) {
-
-    if (!is_string($texto) || $texto === '') {
-        return $texto;
-    }
-
-    // Si ya es UTF-8 válido, no modificarlo
-    if (mb_check_encoding($texto, 'UTF-8')) {
-        return $texto;
-    }
-
-    // Convertir desde Windows-1252 a UTF-8
-    return mb_convert_encoding($texto, 'UTF-8', 'Windows-1252');
-}
-
 if ($result && $result->num_rows !== 0) {
 
 while ($row = $result->fetch_assoc()) {
@@ -55,7 +39,7 @@ while ($row = $result->fetch_assoc()) {
     /********************* OBTENER LA URL PRINCIPAL DEL PRODUCTO ***********************/
     $url='';
     if($row["img_principal"]!='')
-        $url=urldecode(("https://fibremex.com/fibra-optica/public/images/img_spl/productos/".$row["codigo"]."/thumbnail/".$row["img_principal"]));
+        $url=urldecode(utf8_encode("https://fibremex.com/fibra-optica/public/images/img_spl/productos/".$row["codigo"]."/thumbnail/".$row["img_principal"]));
 
     /***********************************************************************************/
     /********************* OBTENER LA MARCA DEL PRODUCTO ***********************/
@@ -76,7 +60,7 @@ while ($row = $result->fetch_assoc()) {
     $resultFT = $conn->query($sqlFT);
     if($resultFT->num_rows > 0){
     $rowFT = $resultFT->fetch_assoc();
-    $FT=urldecode("https://fibremex.com/fibra-optica/public/images/img_spl/".($rowFT['ruta'].".pdf"));
+    $FT=urldecode("https://fibremex.com/fibra-optica/public/images/img_spl/".mb_convert_encoding($rowFT['ruta'].".pdf",'UTF-8', 'ISO-8859-1'));
     }
     /***********************************************************************************/
     /********************* OBTENER LA FAMILIA Y SUBFAMILIA DEL PRODUCTO ***********************/
@@ -90,8 +74,8 @@ while ($row = $result->fetch_assoc()) {
     $resultCat = $conn->query($sqlCat);
     if($resultCat->num_rows > 0){
     $rowCat = $resultCat->fetch_assoc();
-    $subcategoria=($rowCat['descripcion']);
-    $categoria=($rowCat['desc_familia']);
+    $subcategoria=mb_convert_encoding($rowCat['descripcion'], 'UTF-8', 'ISO-8859-1');
+    $categoria=mb_convert_encoding($rowCat['desc_familia'], 'UTF-8', 'ISO-8859-1');
     }
     /***********************************************************************************/
     /********************* OBTENER DESCRIPCION LARGA DEL PRODUCTO ***********************/
@@ -102,47 +86,31 @@ while ($row = $result->fetch_assoc()) {
     $resultDESC = $conn->query($sqlDESC);
     if($resultDESC->num_rows > 0){
     $rowDESC = $resultDESC->fetch_assoc();
-    $DESL=($rowDESC['desc_larga']);
+    $DESL=mb_convert_encoding($rowDESC['desc_larga'], 'UTF-8', 'ISO-8859-1');
     }
     /***********************************************************************************/
 
     $productos[] = [
             "Codigo" => $row["codigo"],
-            "Descripcion" => corregirUTF8($row["desc_producto"]),
+            "Descripcion" => mb_convert_encoding($row["desc_producto"], 'UTF-8', 'ISO-8859-1'),
             "Stock" => floor($row["existencia"]*0.625),
             "Precio" => $PL,
             "Moneda" => "USD",
             "Imagen" => $url,
             "FichaTecnica" => $FT,
-            "Marca" => corregirUTF8($marca),
-            "Categoria" => corregirUTF8($categoria),
-            "Subcategoria" => corregirUTF8($subcategoria),
-            "Caracteristicas" => corregirUTF8($DESL)
+            "Marca" => $marca,
+            "Categoria" => $categoria,
+            "Subcategoria" => $subcategoria,
+            "Caracteristicas" => $DESL
         ];
         //echo json_encode($row);
 }
 //var_dump($productos);
 
-$response = [
-    "status" => "success",
-    "data" => $productos
-];
-
-$json = json_encode(
-    $response,
-    JSON_UNESCAPED_UNICODE |
-    JSON_UNESCAPED_SLASHES
-);
-
-if ($json === false) {
-    echo json_encode([
-        "status" => "error",
-        "mensaje" => json_last_error_msg(),
-        "codigo_error" => json_last_error()
-    ]);
-} else {
-    echo $json;
-}
+echo json_encode(
+    ["status" => "success", "data" => $productos],
+    JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+    );
 }else{
 
     echo json_encode(["status" => "success", "data" => $productos]);
